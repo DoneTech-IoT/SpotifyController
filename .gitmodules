@@ -1,0 +1,3 @@
+[submodule "components/OAuth2"]
+	path = components/OAuth2
+	url = https://github.com/DoneTech-IoT/OAuth2
