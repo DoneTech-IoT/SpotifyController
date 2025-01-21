@@ -5,6 +5,7 @@
 #include "esp_log.h"
 
 #include "nvsFlash.h"
+#include "SpiffsManager.h"
 #include "WiFiConfig.h"
 #include "Authorization.h"
 #include "SpotifyInterface.h"
