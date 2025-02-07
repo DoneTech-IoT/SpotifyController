@@ -1,3 +1,6 @@
 [submodule "components/OAuth2"]
 	path = components/OAuth2
 	url = https://github.com/DoneTech-IoT/OAuth2
+[submodule "components/Utilities"]
+	path = components/Utilities
+	url = git@github.com:DoneTech-IoT/Utilities.git
