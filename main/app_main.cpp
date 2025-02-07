@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include "esp_log.h"
 
-// Wrap ESP-IDF C headers with extern "C" to prevent linker issues
-extern "C" {
-    #include "freertos/FreeRTOS.h"
-    #include "freertos/task.h"
-    #include "driver/gpio.h"
-    #include "esp_http_client.h"
-    
-    #include "nvsFlash.h"
-    #include "SpiffsManager.h"
-    #include "WiFiConfig.h"
-    #include "Authorization.h"
-    #include "SpotifyInterface.h"
-}
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/gpio.h"
+#include "esp_http_client.h"
+
+#include "nvsFlash.h"
+#include "SpiffsManager.h"
+#include "WiFiConfig.h"
+#include "Authorization.h"
+#include "SpotifyInterface.h"
+#include "ServiceManager.h"
 
 #define TAG "App"
 
@@ -72,6 +71,8 @@ extern "C" void app_main()
     nvsFlashInit();
     SpiffsInit();
     LEDInit();
+
+    ServiceManger_TaskInit();
 
     gpio_set_level(GPIO_LED_RED, RGB_LED_ON);
     IsWifiConnectedSemaphore = xSemaphoreCreateBinary();
