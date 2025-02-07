@@ -4,3 +4,6 @@
 [submodule "components/Utilities"]
 	path = components/Utilities
 	url = git@github.com:DoneTech-IoT/Utilities.git
+[submodule "components/UserInterface"]
+	path = components/UserInterface
+	url = git@github.com:DoneTech-IoT/UserInterface.git
