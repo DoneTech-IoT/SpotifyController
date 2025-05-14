@@ -45,19 +45,6 @@ SemaphoreHandle_t IsWifiConnectedSemaphore = NULL;
 OAuthInterfaceHandler_t OAuthInterfaceHandler;
 SpotifyInterfaceHandler_t SpotifyInterfaceHandler;
 
-// SpotifyHttpInfo_t Spotify_ClientInfo = {
-//     .url = "https://accounts.spotify.com/api/token",
-//     .host = "accounts.spotify.com",
-//     .path = "/api/token",
-//     .requestURI = "/",
-//     .responseURI = "/callback/",
-//     .hostnameMDNS = "spotify",
-//     .requestURL = "http://accounts.spotify.com/authorize/?client_id=%s&response_type=code&redirect_uri=%s&scope=user-read-private%%20user-read-currently-playing%%20user-read-playback-state%%20user-modify-playback-state",
-//     .clientID = "2c2dadbd46244f2cb9f71251bc004caa",
-//     .base64Credintials = "MmMyZGFkYmQ0NjI0NGYyY2I5ZjcxMjUxYmMwMDRjYWE6MTE3MTFiZDBiNmQ0NGIzNDhhOGRlMDdjYjJjMzgzZGM=",
-//     .redirectURL = "http%3A%2F%2Fdeskhub.local%2Fcallback%2f",
-// };
-
 void app_main(void)
 {
     nvsFlashInit();
@@ -84,17 +71,6 @@ void app_main(void)
 
     OAuthInterfaceHandler.IsServiceAuthorizedSemaphore = &IsSpotifyAuthorizedSemaphore;
     OAuthInterfaceHandler.ConfigAddressInSpiffs = SpotifyConfigAddressInSpiffs;
-
-    // OAuthInterfaceHandler.ClientConfig.url = Spotify_ClientInfo.url;
-    // OAuthInterfaceHandler.ClientConfig.host = Spotify_ClientInfo.host;
-    // OAuthInterfaceHandler.ClientConfig.path = Spotify_ClientInfo.path;
-    // OAuthInterfaceHandler.ClientConfig.requestURI = Spotify_ClientInfo.requestURI;
-    // OAuthInterfaceHandler.ClientConfig.responseURI = Spotify_ClientInfo.responseURI;
-    // OAuthInterfaceHandler.ClientConfig.hostnameMDNS = Spotify_ClientInfo.hostnameMDNS;
-    // OAuthInterfaceHandler.ClientConfig.requestURL = Spotify_ClientInfo.requestURL; 
-    // OAuthInterfaceHandler.ClientConfig.clientID = Spotify_ClientInfo.clientID;
-    // OAuthInterfaceHandler.ClientConfig.base64Credintials = Spotify_ClientInfo.base64Credintials;
-    // OAuthInterfaceHandler.ClientConfig.redirectURL = Spotify_ClientInfo.redirectURL;
 
     if(!Oauth_TaskInit(&OAuthInterfaceHandler))
     {
