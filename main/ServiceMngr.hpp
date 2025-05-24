@@ -1,21 +1,24 @@
 #pragma once 
 #include "sdkconfig.h"
 #include <memory>
-// #ifdef CONFIG_DONE_COMPONENT_LVGL
-// #include "UICoffeeMaker.hpp"
-// #endif
-// #ifdef CONFIG_DONE_COMPONENT_MATTER
-// #include "MatterCoffeeMaker.hpp"
-// #else
-// #include "esp_netif.h"
-// #include "protocol_examples_common.h"
-// #endif
-// #ifdef CONFIG_DONE_LOG
-// #include "Custom_Log.h"
-// #endif
-// #ifdef CONFIG_DONE_COMPONENT_MQTT
-// #include "MQTT_CoffeeMaker.hpp"
-// #endif
+#ifdef CONFIG_DONE_COMPONENT_LVGL
+#include "UICoffeeMaker.hpp"
+#endif
+#ifdef CONFIG_DONE_COMPONENT_MATTER
+#include "MatterCoffeeMaker.hpp"
+#else
+#include "esp_netif.h"
+//#include "protocol_examples_common.h"
+#endif
+#ifdef CONFIG_DONE_LOG
+#include "Custom_Log.h"
+#endif
+#ifdef CONFIG_DONE_COMPONENT_MQTT
+#include "MQTT_CoffeeMaker.hpp"
+#endif
+#ifdef CONFIG_DONE_COMPONENT_OAUTH
+#include "OauthService.hpp"
+#endif
 
 #include <stdint.h>
 #include "freertos/FreeRTOS.h"
@@ -42,7 +45,8 @@ public:
         "UI",
         "MATTER",
         "MQTT",
-        "LOG",      
+        "LOG",     
+        "OAUTH" 
     };    
 
     static constexpr uint32_t mServiceStackSize[SharedBus::ServiceID::MAX_ID] =
@@ -52,7 +56,8 @@ public:
         100 * 1024,     //UI
         50  * 1024,     //MATTER
         50  * 1024,     //MQTT
-        0               //LOG
+        20  * 1024,     //LOG
+        20  * 1024      //OAUTH
     };
     
     explicit ServiceMngr(
@@ -74,6 +79,10 @@ private:
 #ifdef CONFIG_DONE_COMPONENT_MQTT
     static TaskHandle_t MQTTHandle;
     static std::shared_ptr<MQTTCoffeeMaker>mqttCoffeeMakerApp;
+#endif
+#ifdef CONFIG_DONE_COMPONENT_OAUTH
+    static TaskHandle_t OauthHandle;
+    static std::shared_ptr<OauthService>oauthService;
 #endif
     
     typedef void (*TaskKillerPtr)(void);

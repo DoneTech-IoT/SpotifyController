@@ -21,8 +21,9 @@ std::shared_ptr<MatterCoffeeMaker> ServiceMngr::matterCoffeeMaker;
 TaskHandle_t ServiceMngr::MQTTHandle = nullptr;
 std::shared_ptr<MQTTCoffeeMaker> ServiceMngr::mqttCoffeeMakerApp;
 #endif
-#ifdef CONFIG_DONE_COMPONENT_MQTT
+#ifdef CONFIG_DONE_COMPONENT_OAUTH
 TaskHandle_t ServiceMngr::OauthHandle = nullptr;
+std::shared_ptr<OauthService> ServiceMngr::oauthService;
 #endif
 
 
@@ -146,8 +147,28 @@ esp_err_t ServiceMngr::OnMachineStateStart()
     }
 #endif // CONFIG_DONE_COMPONENT_MQTT
 
+#ifdef CONFIG_DONE_COMPONENT_OAUTH
+    oauthService = Singleton<OauthService, const char*, SharedBus::ServiceID>::
+                        GetInstance(static_cast<const char*>
+                        (mServiceName[SharedBus::ServiceID::OAUTH]),
+                        SharedBus::ServiceID::OAUTH);                
+            
+    err = oauthService->TaskInit(
+        &OauthHandle,
+        tskIDLE_PRIORITY + 1,
+        mServiceStackSize[SharedBus::ServiceID::OAUTH]);
 
-//FIXME should i add oauth 
+    if (err == ESP_OK)
+    {
+        ESP_LOGI(TAG,"%s service created.",
+            mServiceName[SharedBus::ServiceID::OAUTH]);
+    }
+    else
+    {
+        ESP_LOGE(TAG,"failed to create %s service",
+            mServiceName[SharedBus::ServiceID::OAUTH]);
+    }    
+#endif //CONFIG_DONE_COMPONENT_OAUTH
 
     return err;
 }
